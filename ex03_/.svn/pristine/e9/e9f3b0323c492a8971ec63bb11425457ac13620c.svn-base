@@ -1,0 +1,89 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset=UTF-8">
+<title>2021. 4. 27.오후 10:29:08</title>
+</head>
+<body>
+ <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4"><img src="resources/img/logo.jpg" alt="로고 이미지" style="width: 150px; margin-left: 50px"></h1>
+        
+      <div id="box">
+            <li class="main1 list-group-item">
+      			Category
+                <ul class="sub1" style="list-style: none; display: none;">
+                    <a href="#">텐트</a><br>
+                    <a href="#">그늘막</a><br>
+                    <a href="#">타프</a><br>
+                    <a href="#">침낭</a><br>
+                    <a href="#">캠핑테이블</a><br>
+                    <a href="#">캠핑의자</a><br>
+                    <a href="#">그릴/화로</a><br>
+                    <a href="#">난방/보온</a><br>
+                    <a href="#">코펠/식기도구</a><br>
+                    <a href="#">랜턴/램프</a><br>
+                    <a href="#">온/냉장</a><br>
+                    <a href="#">캠핑공구</a><br>
+                    <a href="#">기타</a><br>
+                </ul>
+            </li>
+            <li class="main2 list-group-item">
+      			Brand
+                <ul class="sub2" style="display:none">
+                    <a href="#">코베아</a><br>
+                    <a href="#">버팔로</a><br>
+                    <a href="#">BUCK703</a><br>
+                    <a href="#">로티캠프</a><br>
+                    <a href="#">캠프365</a><br>
+                    <button> 브랜드 더보기 </button>
+                </ul>
+            </li>
+            <li class="main3 list-group-item">
+      			Ornament
+                <ul class="sub3" style="display:none">
+                     <a href="#">LED/전구</a><br>
+                     <a href="#">텐트 장식</a><br>
+                     <a href="#">편의 용품</a><br>
+                     <a href="#">?</a><br>
+                     <a href="#">?</a><br>
+                </ul>
+            </li>
+            
+        </div>
+        <script>
+            $(".main1").click(function(){
+                if($(".sub1").is(":visible")){
+                    $(".sub1").slideUp();
+                }
+                else{
+                    $(".sub1").slideDown();
+                }
+            })
+            $(".main2").click(function(){
+                if($(".sub2").is(":visible")){
+                    $(".sub2").slideUp();
+                }
+                else{
+                    $(".sub2").slideDown();
+                }
+            })
+            $(".main3").click(function(){
+                if($(".sub3").is(":visible")){
+                    $(".sub3").slideUp();
+                }
+                else{
+                    $(".sub3").slideDown();
+                }
+            })
+        </script>
+
+      </div>
+
+</body>
+</html>

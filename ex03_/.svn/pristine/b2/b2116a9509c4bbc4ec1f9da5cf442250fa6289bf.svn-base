@@ -1,0 +1,5 @@
+package net.lepelaka.service;
+
+public interface SampleTxService {
+	void addData(String value);
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capriberry.mapper.BoardMapper">
+	<sql id="cri">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+				<!-- 가나다라 -->
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							CONTENT LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							WRITER LIKE '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>			
+			</foreach>
+		</trim>
+	</sql>
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+		SELECT count(*) FROM TBL_BOARD WHERE 
+		]]>
+		<include refid="cri" />
+		<![CDATA[
+		BNO > 0
+		]]>
+	</select>
+	<select id="getList" resultType="com.capriberry.domain.BoardVO">
+		<![CDATA[
+		SELECT
+		    /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+		    *
+		FROM TBL_BOARD
+		WHERE BNO > 0
+		]]>
+	</select>
+	<select id="getListWithPaging" resultType="com.capriberry.domain.BoardVO">
+		<![CDATA[
+		WITH TMP AS (
+		    SELECT
+		    /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+		    ROWNUM RN, TBL_BOARD.*
+		    FROM TBL_BOARD
+		    WHERE 
+		]]>
+		<include refid="cri" />
+		<![CDATA[    
+		    BNO > 0
+		    AND ROWNUM <= #{pageNum} * #{amount}
+		)
+		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE, REPLYCNT FROM TMP
+		WHERE RN > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO TBL_BOARD (BNO, TITLE, CONTENT, WRITER)
+		VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{content}, #{writer})
+	</insert>
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			SELECT SEQ_BOARD.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TBL_BOARD (BNO, TITLE, CONTENT, WRITER)
+		VALUES (#{bno}, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="read" resultType="com.capriberry.domain.BoardVO">
+		SELECT * FROM TBL_BOARD WHERE BNO = #{bno}
+	</select>
+
+	<delete id="delete" >
+		DELETE TBL_BOARD WHERE BNO = #{bno}
+	</delete>
+	
+	<update id="update" >
+		UPDATE TBL_BOARD SET
+			TITLE = #{title}
+			,CONTENT = #{content}
+			,WRITER = #{writer}
+			,UPDATEDATE = SYSDATE
+		WHERE BNO = #{bno}	
+	</update>
+</mapper>

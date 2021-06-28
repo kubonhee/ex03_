@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capriberry.mapper.MemberMapper">
+	<resultMap type="com.capriberry.domain.MemberVO" id="memberMap">
+		<id property="userid" column="userid"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="userName" column="userName"/>
+		<result property="regDate" column="regDate"/>
+		<result property="updateDate" column="updateDate"/>
+		<collection property="authList" resultMap="authMap" />
+	</resultMap>	
+	<resultMap type="com.capriberry.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
+	</resultMap>	
+	
+	<select id="read" resultMap="memberMap">
+	SELECT * 
+	FROM TBL_MEMBER
+	JOIN TBL_MEMBER_AUTH
+	USING (USERID)
+	WHERE USERID = #{userid}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="register">
+		INSERT INTO TBL_MEMBER( USERID,
+								USERPW,
+								USERNAME)
+						VALUES( #{userid},
+								#{userpw},
+								#{userName})
+	</insert>
+
+
+	</mapper>

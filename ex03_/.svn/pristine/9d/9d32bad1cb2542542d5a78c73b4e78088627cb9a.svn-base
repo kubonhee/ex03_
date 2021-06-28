@@ -1,0 +1,7 @@
+package net.lepelaka.mapper;
+
+import net.lepelaka.domain.MemberVO;
+
+public interface MemberMapper {
+	MemberVO read(String userid);
+}
